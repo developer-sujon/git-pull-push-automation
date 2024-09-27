@@ -57,7 +57,7 @@ For production deployment, you may use PM2 to manage the node process. Create an
   "apps": [
     {
       "name": "git-pull-push-automation",
-      "script": "src/gitPush.js",
+      "script": "src/index.js",
       "watch": true,
       "env": {
         "NODE_ENV": "production"
@@ -95,7 +95,7 @@ This command will use PM2 to restart the application with the configuration from
 ├── src
 │   ├── config.js        # Loads and exports environment variables
 │   ├── gitCommands.js   # Contains logic for Git operations (clone, pull, push)
-│   ├── gitPush.js       # Main file for the cron job
+│   ├── index.js       # Main file for the cron job
 ├── .env                 # Environment variables (not included in version control)
 ├── package.json         # Node.js dependencies and scripts
 ├── ecosystem.config.json# PM2 configuration for production
@@ -106,7 +106,7 @@ This command will use PM2 to restart the application with the configuration from
 
 - `src/config.js`: Loads environment variables from `.env` and exports them as an object.
 - `src/gitCommands.js`: Contains functions to run Git commands (clone, checkout, pull, merge, push).
-- `src/gitPush.js`: The main script that schedules the cron job and performs Git automation.
+- `src/index.js`: The main script that schedules the cron job and performs Git automation.
 
 ## Cron Job Configuration
 
