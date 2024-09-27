@@ -1,0 +1,14 @@
+{
+  "name": "git-pull-push-automation",
+  "version": "1.0.0",
+  "description": "Automate git pull from development and push to production",
+  "main": "src/gitPush.js",
+  "scripts": {
+    "start": "node src/gitPush.js",
+    "start:prod": "pm2 restart ecosystem.config.json"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "node-cron": "^3.0.0"
+  }
+}

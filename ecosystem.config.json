@@ -1,0 +1,15 @@
+{
+  "apps": [
+    {
+      "name": "git-pull-push-automation",
+      "script": "src/gitPush.js",
+      "instances": 1,
+      "autorestart": true,
+      "watch": false,
+      "time": true,
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}
