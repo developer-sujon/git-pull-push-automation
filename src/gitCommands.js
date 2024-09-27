@@ -2,19 +2,20 @@ const { exec } = require("child_process");
 const path = require("path");
 const fs = require("fs");
 const config = require("./config");
+const logger = require("./config/logger");
 
 // Function to execute Git commands
 function runCommand(command, repoPath) {
   return new Promise((resolve, reject) => {
     exec(command, { cwd: repoPath }, (error, stdout, stderr) => {
       if (error) {
-        console.error(`Error: ${error.message}`);
+        logger.error(`Error: ${error.message}`);
         reject(error);
       }
       if (stderr) {
-        console.error(`Stderr: ${stderr}`);
+        logger.info(`Stderr: ${stderr}`);
       }
-      console.log(`Output: ${stdout}`);
+      logger.info(`Output: ${stdout}`);
       resolve(stdout);
     });
   });
@@ -27,16 +28,16 @@ async function cloneRepository(gitUrl) {
 
   // Check if the repository directory already exists
   if (fs.existsSync(repoPath)) {
-    console.log(`Repository already exists at ${repoPath}.`);
+    logger.error(`Repository already exists at ${repoPath}.`);
     return repoPath; // Return the existing path
   }
 
   try {
-    console.log("Cloning the repository...");
+    logger.info("Cloning the repository...");
     await runCommand(`git clone ${gitUrl}`, __dirname);
     return repoPath; // Return the path of the cloned repo
   } catch (error) {
-    console.error("Failed to clone the repository:", error);
+    logger.error("Failed to clone the repository:", error);
     throw error; // Rethrow the error for handling
   }
 }
@@ -44,20 +45,20 @@ async function cloneRepository(gitUrl) {
 // Function to pull from development and push to production
 async function updateBranches(repoPath) {
   try {
-    console.log(`Switching to the ${config.cloneBranch} branch...`);
+    logger.info(`Switching to the ${config.cloneBranch} branch...`);
     await runCommand(`git checkout ${config.cloneBranch}`, repoPath);
     await runCommand(`git pull origin ${config.cloneBranch}`, repoPath);
 
-    console.log(`Merging ${config.cloneBranch} into ${config.pushBranch}...`);
+    logger.info(`Merging ${config.cloneBranch} into ${config.pushBranch}...`);
     await runCommand(`git checkout ${config.pushBranch}`, repoPath);
     await runCommand(`git merge ${config.cloneBranch}`, repoPath);
 
-    console.log(`Pushing to ${config.pushBranch} branch...`);
+    logger.info(`Pushing to ${config.pushBranch} branch...`);
     await runCommand(`git push origin ${config.pushBranch}`, repoPath);
 
-    console.log(`Successfully updated the ${config.pushBranch} branch.`);
+    logger.info(`Successfully updated the ${config.pushBranch} branch.`);
   } catch (error) {
-    console.error("Failed to update the branches:", error);
+    logger.error("Failed to update the branches:", error);
   }
 }
 
@@ -68,12 +69,12 @@ async function cloneRepositoryAndUpdateBranched() {
   try {
     // Clone the repository and get the repo path
     const repoPath = await cloneRepository(gitUrl);
-    console.log(`Using repository at: ${repoPath}`);
+    logger.info(`Using repository at: ${repoPath}`);
 
     // Update branches
     await updateBranches(repoPath);
   } catch (error) {
-    console.error("An error occurred:", error);
+    logger.error("An error occurred:", error);
   }
 }
 module.exports = cloneRepositoryAndUpdateBranched;

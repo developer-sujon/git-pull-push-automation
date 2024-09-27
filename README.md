@@ -20,7 +20,7 @@ This project automates the process of pulling changes from a specified branch an
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/developer-sujon/git-pull-push-automation.git
+git git@github.com:developer-sujon/git-pull-push-automation.git
 cd git-pull-push-automation
 ```
 
@@ -37,7 +37,7 @@ yarn
 Create a `.env` file in the root directory of your project and add the following variables:
 
 ```env
-GITHUB_URL=https://github.com/developer-sujon/git-pull-push-automation
+GITHUB_URL=git@github.com:<username>/<repository>
 CLONE_BRANCH=main
 PUSH_BRANCH=production
 CRON_SCHEDULE=*/5 * * * * *  # Runs every 5 seconds

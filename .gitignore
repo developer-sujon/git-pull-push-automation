@@ -5,6 +5,7 @@
 # env  logs 
 .env
 .logs
+/logs
 .vscode
 
 # Logs

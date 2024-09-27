@@ -2,7 +2,7 @@
   "apps": [
     {
       "name": "git-pull-push-automation",
-      "script": "src/gitPush.js",
+      "script": "src/index.js",
       "instances": 1,
       "autorestart": true,
       "watch": false,
